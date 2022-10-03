@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import { Component } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import PropTypes from 'prop-types';
 
 import { Button, Form, Input, Label } from './ContactForm.styled';
 
@@ -20,9 +21,6 @@ class ContactForm extends Component {
 	handleSubmit = e => {
 		e.preventDefault();
 
-		if (this.state.name === e.target.name) {
-			alert("");
-		}
 
 		this.props.onSubmit(this.state);
 		this.reset();
@@ -73,3 +71,7 @@ class ContactForm extends Component {
 }
 
 export default ContactForm;
+
+ContactForm.propTypes = {
+	onSubmit: PropTypes.func.isRequired,
+};
