@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
+import { Component } from 'react';
 
 import ContactForm from '../ContactForm';
+import ContactList from '../ContactList';
 import Filter from '../Filter';
-import ContactList  from '../ContactList';
 
 
-import { AppWrapper, Title, TitleContacts} from './App.styled';
+import { AppWrapper, Title, TitleContacts } from './App.styled';
 
 class App extends Component {
 	state = {
@@ -17,6 +17,23 @@ class App extends Component {
 			{ id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 		],
 		filter: '',
+	};
+	componentDidMount()
+	{
+		const contacts = localStorage.getItem('contacts');
+		const parsedContacts = JSON.parse(contacts);
+		if (parsedContacts)
+		{
+			this.setState({ contacts: parsedContacts });
+			}
+	};
+	
+	componentDidUpdate(PrevPops, prevState) {
+
+		const { contacts } = this.state;
+		if (contacts !== prevState.contacts) {
+			localStorage.setItem('contacts', JSON.stringify(contacts));
+		}
 	};
 
 	addContact = ({ name, number }) => {
@@ -64,13 +81,13 @@ class App extends Component {
 				<ContactForm onSubmit={this.addContact} />
 
 				<TitleContacts>Contacts</TitleContacts>
-				
+
 				<Filter value={filter} onFilterContacts={this.filterContacts} />
 				<ContactList
 					contacts={renderContacts}
 					onDeleteContact={this.deleteContact}
-					/>
-				
+				/>
+
 			</AppWrapper>
 		);
 	}
