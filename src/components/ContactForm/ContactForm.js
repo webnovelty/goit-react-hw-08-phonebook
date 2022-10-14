@@ -1,42 +1,46 @@
 import { nanoid } from 'nanoid';
-import { Component } from 'react';
+import { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 
 import { Button, Form, Input, Label } from './ContactForm.styled';
 
-const DEFAULT_STATE = {
-	name: '',
-	number: '',
-};
+const ContactForm = ({onSubmit}) => {
 
-class ContactForm extends Component {
-	state = { ...DEFAULT_STATE };
+	const [name, setName] = useState('');
+	const [number, setNumber] = useState('');
 
-	handleChange = e => {
-		const { name, value } = e.target;
-		this.setState({ [name]: value });
+
+	const handleChange = e => {
+		if (e.target.name === 'name')
+		{
+			setName(e.currentTarget.value);
+		};
+		if (e.target.name === 'number') {
+			setNumber(e.currentTarget.value);
+
+		};
+	
 	};
 
-	handleSubmit = e => {
+	const handleSubmit = e => {
 		e.preventDefault();
 
 
-		this.props.onSubmit(this.state);
-		this.reset();
+		onSubmit(name, number);
+		reset();
 	};
 
-	reset = () => {
-		this.setState({ ...DEFAULT_STATE });
+	const reset = () => {
+		setName('');
+		setNumber('');
 	};
 
-	render() {
-		const { name, number } = this.state;
 		const nameId = nanoid(3);
 		const numberId = nanoid(3);
 		return (
 			<>
-				<Form onSubmit={this.handleSubmit}>
+				<Form onSubmit={handleSubmit}>
 					<Label htmlFor={nameId}>Name:</Label>
 					<Input
 						type="text"
@@ -47,7 +51,7 @@ class ContactForm extends Component {
 						pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
 						title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
 						required
-						onChange={this.handleChange}
+						onChange={handleChange}
 					/>
 					<Label htmlFor={numberId}>Number:</Label>
 					<Input
@@ -59,7 +63,7 @@ class ContactForm extends Component {
 						pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
 						title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
 						required
-						onChange={this.handleChange}
+						onChange={handleChange}
 					/>
 					<Button type="submit">
 						<AiOutlineUserAdd size={24} color={'blue'} />
@@ -68,7 +72,7 @@ class ContactForm extends Component {
 			</>
 		);
 	}
-}
+
 
 export default ContactForm;
 
