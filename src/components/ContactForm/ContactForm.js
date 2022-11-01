@@ -1,15 +1,16 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
-import PropTypes from 'prop-types';
+import { addContact } from 'redux/contactsSlice';
+import { useDispatch } from "react-redux";
 
 import { Button, Form, Input, Label } from './ContactForm.styled';
 
-const ContactForm = ({onSubmit}) => {
+const ContactForm = () => {
 
 	const [name, setName] = useState('');
 	const [number, setNumber] = useState('');
-
+	const dispatch = useDispatch();
 
 	const handleChange = e => {
 		if (e.target.name === 'name')
@@ -25,9 +26,8 @@ const ContactForm = ({onSubmit}) => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-
-
-		onSubmit(name, number);
+		const form = e.target;
+		dispatch(addContact(form.elements.name.value, form.elements.number.value));
 		reset();
 	};
 
@@ -35,7 +35,6 @@ const ContactForm = ({onSubmit}) => {
 		setName('');
 		setNumber('');
 	};
-
 		const nameId = nanoid(3);
 		const numberId = nanoid(3);
 		return (
@@ -75,7 +74,3 @@ const ContactForm = ({onSubmit}) => {
 
 
 export default ContactForm;
-
-ContactForm.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
-};

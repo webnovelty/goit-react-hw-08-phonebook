@@ -1,11 +1,18 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
 import { Label, Input, Title } from './Filter.styled';
+import { useSelector, useDispatch } from "react-redux";
+import { getStatusFilter } from 'redux/selectors';
+import {setStatusFilter} from 'redux/filtersSlice'
 
-// import { Button } from './FeedbackOptions.styled';
+const Filter = () => {
+	const dispatch = useDispatch();
+	const filter = useSelector(getStatusFilter);
 
-const Filter = ({ value, onFilterContacts }) => {
+	const filterContacts = e => {
+		dispatch(setStatusFilter(e.currentTarget.value));
+	};
+
 	const filterId = nanoid(3);
 	return (
 		<Label htmlFor={filterId}>
@@ -13,8 +20,8 @@ const Filter = ({ value, onFilterContacts }) => {
 			<Input
 				type="text"
 				placeholder="Input name"
-				value={value}
-				onChange={onFilterContacts}
+				value={filter}
+				onChange={filterContacts}
 				id={filterId}
 			/>
 		</Label>
@@ -22,8 +29,3 @@ const Filter = ({ value, onFilterContacts }) => {
 };
 
 export default Filter;
-
-Filter.propTypes = {
-	value: PropTypes.string.isRequired,
-	onFilterContacts: PropTypes.func.isRequired,
-};
