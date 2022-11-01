@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Button } from "./Contact.styled";
-import { deleteContact} from "redux/contactsSlice";
+import { deleteContact } from "redux/contactsSlice";
+import PropTypes from 'prop-types';
 import { AiFillAndroid, AiOutlineUserDelete } from 'react-icons/ai';
 
 const Contact = ({ id, name, number }) => {
@@ -20,3 +21,13 @@ const Contact = ({ id, name, number }) => {
 	);
 };
 export default Contact;
+
+Contact.propTypes = {
+	contacts: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+			number: PropTypes.string.isRequired,
+		})
+	),
+};
