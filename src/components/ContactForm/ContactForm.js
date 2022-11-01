@@ -2,12 +2,13 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { addContact } from 'redux/contactsSlice';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getContacts} from "redux/selectors";
 
 import { Button, Form, Input, Label } from './ContactForm.styled';
 
 const ContactForm = () => {
-
+	const contacts = useSelector(getContacts);
 	const [name, setName] = useState('');
 	const [number, setNumber] = useState('');
 	const dispatch = useDispatch();
@@ -27,6 +28,13 @@ const ContactForm = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		const form = e.target;
+		if (
+			contacts.find(
+				contact => contact.name.toLowerCase() === form.elements.name.value.toLowerCase()
+			)
+		) {
+			return alert(`${form.elements.name.value} is already in contacts.`);
+		}
 		dispatch(addContact(form.elements.name.value, form.elements.number.value));
 		reset();
 	};
