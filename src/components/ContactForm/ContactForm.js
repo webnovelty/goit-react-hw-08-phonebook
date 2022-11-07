@@ -2,10 +2,20 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { Formik} from 'formik';
 import { Button, Forms, Input, Label } from './ContactForm.styled';
 import PropTypes from 'prop-types';
+import { useFetchContactsQuery } from 'redux/contactsSlice';
 
-const ContactForm = ({onSubmit}) => {
+const ContactForm = ({ onSubmit }) => {
+	const { data: contacts} = useFetchContactsQuery();
 	
 	const handleSubmit = async (values, actions) => {
+
+		if (
+			contacts.find(
+				contact => contact.name.toLowerCase() === values.name.toLowerCase()
+			)
+		) {
+			return alert(`${values.name} is already in contacts.`);
+		}
 		await onSubmit(values);
 		actions.setSubmitting(false);
 		actions.resetForm();
