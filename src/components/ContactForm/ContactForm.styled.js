@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { Form, Field } from 'formik';
 
-export const Form = styled.form`
+
+export const Forms = styled(Form)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +24,7 @@ export const Label = styled.label`
   font: 1.5em Georgia, serif;
 `;
 
-export const Input = styled.input`
+export const Input = styled(Field)`
   margin-right: 10px;
   padding-left: 5px;
   font-size: 30px;

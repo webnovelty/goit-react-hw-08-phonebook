@@ -1,26 +1,17 @@
-
-import ContactForm from '../ContactForm';
-import ContactList from '../ContactList';
-import Filter from '../Filter';
-
-
-
-import { AppWrapper, Title, TitleContacts } from './App.styled';
+import { Routes, Route} from 'react-router-dom';
+import Layout  from 'components/Layout';
+import { NotFoundPage } from 'pages/NotFoundPage';
 
 const App = () => {
 	return (
-		<AppWrapper>
-			<Title>Phonebook</Title>
-			<ContactForm/>
-
-			<TitleContacts>Contacts</TitleContacts>
-
-			<Filter />
-			<ContactList/>
-
-		</AppWrapper>
+		<>
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route path="*" element={<NotFoundPage />} />
+				</Route>
+			</Routes>
+		</>
 	);
-}
-
+};
 
 export default App;

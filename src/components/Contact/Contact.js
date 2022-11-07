@@ -1,21 +1,21 @@
-import { useDispatch } from "react-redux";
-import { Button } from "./Contact.styled";
-import { deleteContact } from "redux/contactsSlice";
 import PropTypes from 'prop-types';
 import { AiFillAndroid, AiOutlineUserDelete } from 'react-icons/ai';
+import { useDeleteContactMutation } from "redux/contactsSlice";
+import { Button } from "./Contact.styled";
 
-const Contact = ({ id, name, number }) => {
-	const dispatch = useDispatch();
-	const handleDelete = () => dispatch(deleteContact(id));
+
+const Contact = ({ id, name, phone }) => {
+
+	const [deleteContact] = useDeleteContactMutation();
 
 	return (
 		<>
-		<p>
-			<AiFillAndroid size={34} color={'#00FF00'} />
-		</p>
-					{ name }: { number }
-	<Button type="button" onClick={handleDelete} >
-		<AiOutlineUserDelete size={24} color={'blue'} />
+			<p>
+				<AiFillAndroid size={34} color={'#00FF00'} />
+			</p>
+			{name}: {phone}
+			<Button type="button" onClick={() => deleteContact(id)} >
+				<AiOutlineUserDelete size={24} color={'blue'} />
 			</Button>
 		</>
 	);
@@ -23,7 +23,7 @@ const Contact = ({ id, name, number }) => {
 export default Contact;
 
 Contact.propTypes = {
-			id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			number: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	phone: PropTypes.string.isRequired,
 };
