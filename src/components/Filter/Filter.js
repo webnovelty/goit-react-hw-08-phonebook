@@ -2,8 +2,8 @@ import React from 'react';
 import { nanoid } from 'nanoid';
 import { Label, Input, Title } from './Filter.styled';
 import { useSelector, useDispatch } from "react-redux";
-import { getStatusFilter } from 'redux/selectors';
-import {setStatusFilter} from 'redux/filtersSlice'
+import { getStatusFilter } from 'redux/phoneBook/selectors';
+import { setStatusFilter } from 'redux/phoneBook/filtersSlice'
 
 const Filter = () => {
 	const dispatch = useDispatch();
