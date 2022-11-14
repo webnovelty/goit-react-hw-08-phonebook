@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 import { logIn } from "redux/auth/operations";
+import { Toaster } from 'react-hot-toast';
 import { Form, Label, Span, Button } from 'components/LoginForm/LoginForm.styled';
+
 
 const LoginForm = () => {
 
@@ -13,10 +15,11 @@ const LoginForm = () => {
 			email: form.elements.email.value,
 			password: form.elements.password.value
 		}))
-		form.reset();
 	};
 
 	return (
+		<>
+		
 		<Form onSubmit={handleSubmit} autoComplete='off'>
 			<Label>
 				<Span>Email</Span>
@@ -42,6 +45,8 @@ const LoginForm = () => {
 			</Label>
 			<Button type="submit">Log In</Button>
 		</Form>
+			<Toaster />
+		</>
 	)
 };
 

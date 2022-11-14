@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast} from 'react-hot-toast';
 import { register, logIn, logOut, refreshUser } from "./operations";
 
 const authSlice = createSlice({
@@ -22,6 +23,9 @@ const authSlice = createSlice({
 				state.user = action.payload.user;
 				state.token = action.payload.token;
 				state.isLoggedIn = true;
+			})
+			.addCase(logIn.rejected, (state, action) => {
+				toast.error('Invalid email or password :(');
 			})
 			.addCase(logOut.fulfilled, (state) => {
 				state.user = {name: null, email: null};

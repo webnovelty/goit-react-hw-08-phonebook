@@ -1,4 +1,6 @@
+import { useAuth } from "hooks/useAuth";
 import phonebook from 'img/phonebook.png';
+
 
 const styles = {
 
@@ -16,17 +18,18 @@ const styles = {
 };
 
 export default function Home() {
+	const { isLoggedIn } = useAuth();
 	return (
 		<div style={styles.container}>
 			<h1 style={styles.title}>
 				<div><img src={phonebook} width='200px' alt="phonebook" /></div>
-				
+
 				<p>Phone Book{' '}</p>
 				<span role="img" aria-label="Greeting icon">
 					💁‍♀️
 				</span>
-				<p>Register or Login pls</p>
-			
+				{!isLoggedIn && <p>Register or Login pls</p>}
+
 			</h1>
 		</div>
 	);
